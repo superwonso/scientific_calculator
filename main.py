@@ -1,5 +1,6 @@
 import math
 import sys
+import numpy as np
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QIcon
@@ -9,6 +10,7 @@ class Calc(QWidget):
         self.setWindowTitle("공학용 계산기")
         self.setFixedSize(400,300)
         self.initUI()
+
     def initUI(self):
         self.setWindowIcon(QIcon('calc.png'))
         self.current = ''
@@ -22,7 +24,7 @@ class Calc(QWidget):
 
         frame.addWidget(self.display)
         grid = QGridLayout()
-        grid.setSpacing(6)
+        grid.setSpacing(7)
         frame.addLayout(grid)
         self.setLayout(frame)
         names = ['Cls','Bck','Close',u"\N{Division Sign}",
@@ -30,9 +32,10 @@ class Calc(QWidget):
                  '4','5','6','-',
                  '1','2','3','+',
                  '0','00','.','=',
-                 'log','sqrt(x)','x!','x^2']
+                 'ln','sqrt(x)','x!','x^2',
+                 'log','I/x','|x|','exp']
 
-        positions = [(i,j) for i in range(6) for j in range(4)]
+        positions = [(i,j) for i in range(7) for j in range(4)]
         for position,name in zip(positions,names):
             if name == '':
                 continue
@@ -51,24 +54,8 @@ class Calc(QWidget):
             self.display.setText(self.current)
         elif button_text.text() == 'Close':
             self.close()
-            ''' elif button_text.text() == 'log' or 'sqrt(x)' or 'x!' or 'x^2' :
-            try:
-                if 'log' in self.current:
-                    self.current = self.current.replace('log',"")
-                    self.current = str(eval(math.log(self.current)))
-                elif 'sqrt(x)' in self.current:
-                    self.current = self.current.replace('sqrt(x)',"")
-                    self.current = math.sqrt(self.current)
-                elif 'x!' in self.current:
-                    self.current = self.current.replace('x!',"")
-                    self.current = math.factorial(self.current)
-                elif 'x^2' in self.current:
-                    self.current = self.current.replace('x^2',"")
-                    self.current = self.current*self.current
-            except Exception as e :
-                QMessageBox.about(self,'Error!','잘못 된 문장입니다.') '''
-        elif button_text.text() == 'log' :
-            self.current = self.current.strip('log')
+        elif button_text.text() == 'ln' :
+            self.current = self.current.strip('ln')
             self.current = float(self.current)
             self.current = math.log(self.current)
             self.current = str(self.current)
@@ -88,10 +75,34 @@ class Calc(QWidget):
         elif button_text.text() == 'x^2' :
             self.current = self.current.strip('x^2')
             self.current = float(self.current)
-            self.current = self.current*self.current
+            self.current = math.pow(self.current,2)
             self.current = str(self.current)
             self.display.setText(self.current)
-        elif button_text.text() == '=':
+        elif button_text.text() == 'log' :
+            self.current = self.current.strip('log')
+            self.current = float(self.current)
+            self.current = math.log10(self.current)
+            self.current = str(self.current)
+            self.display.setText(self.current)
+        elif button_text.text()=='I/x' :
+            self.current = self.current.strip('I/x')
+            self.current = float(self.current)
+            self.current = np.reciprocal(self.current)
+            self.current = str(self.current)
+            self.display.setText(self.current)
+        elif button_text.text()=='|x|' :
+            self.current = self.current.strip('|x|')
+            self.current = float(self.current)
+            self.current = abs(self.current)
+            self.current = str(self.current)
+            self.display.setText(self.current)
+        elif button_text.text()=='exp' :
+            self.current = self.current.strip('exp')
+            self.current = float(self.current)
+            self.current = math.exp(self.current)
+            self.current = str(self.current)
+            self.display.setText(self.current)
+        elif button_text.text() == '=' :
             try:
                 if u"\N{Division Sign}" in self.current:
                     self.current = self.current.replace(u"\N{Division Sign}",'/')
@@ -104,6 +115,23 @@ class Calc(QWidget):
         else:
             self.current +=button_text.text()
             self.display.setText(self.current)
+
+            ''' elif button_text.text() == 'log' or 'sqrt(x)' or 'x!' or 'x^2' :
+            try:
+                if 'log' in self.current:
+                    self.current = self.current.replace('log',"")
+                    self.current = str(eval(math.log(self.current)))
+                elif 'sqrt(x)' in self.current:
+                    self.current = self.current.replace('sqrt(x)',"")
+                    self.current = math.sqrt(self.current)
+                elif 'x!' in self.current:
+                    self.current = self.current.replace('x!',"")
+                    self.current = math.factorial(self.current)
+                elif 'x^2' in self.current:
+                    self.current = self.current.replace('x^2',"")
+                    self.current = self.current*self.current
+            except Exception as e :
+                QMessageBox.about(self,'Error!','잘못 된 문장입니다.') '''
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
