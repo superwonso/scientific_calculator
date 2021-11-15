@@ -6,7 +6,7 @@ from PyQt5.QtGui import QIcon
 class Example(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Scientific Caluclator")
+        self.setWindowTitle("공학용 계산기")
         self.setFixedSize(400,300)
         self.initUI()
     def initUI(self):
@@ -30,7 +30,7 @@ class Example(QWidget):
                  '4','5','6','-',
                  '1','2','3','+',
                  '0','00','.','=',
-                 'ln','sqrt','x!','x^2']
+                 'log','sqrt(x)','x!','x^2']
 
         positions = [(i,j) for i in range(6) for j in range(4)]
         for position,name in zip(positions,names):
@@ -51,10 +51,11 @@ class Example(QWidget):
             self.display.setText(self.current)
         elif button_text.text() == 'Close':
             self.close()
-        elif button_text.text() == 'ln': # 로그부터 구현하기
-            value = self.current[:len(self.current)-2]
-            self.current = value
-            self.display.setText(math.log(self.current))
+        elif button_text.text() == 'log' :
+            self.current = self.current.strip('log')
+            float(self.current)
+            self.current = math.log(self.current)
+            self.display.setText(self.current)
         elif button_text.text() == '=':
             try:
                 if u"\N{Division Sign}" in self.current:
@@ -64,10 +65,26 @@ class Example(QWidget):
                 self.current = str(eval(self.current))
                 self.display.setText(self.current)
             except Exception as e :
-                QMessageBox.about(self,'Error!','잘못 된 문장입니다.')               
+                QMessageBox.about(self,'Error!','잘못 된 문장입니다.')
         else:
             self.current +=button_text.text()
             self.display.setText(self.current)
+        ''' elif button_text.text() == 'log' or 'sqrt(x)' or 'x!' or 'x^2' :
+            try:
+                if 'log' in self.current:
+                    self.current = self.current.replace('log',"")
+                    self.current = str(eval(math.log(self.current)))
+                elif 'sqrt(x)' in self.current:
+                    self.current = self.current.replace('sqrt(x)',"")
+                    self.current = math.sqrt(self.current)
+                elif 'x!' in self.current:
+                    self.current = self.current.replace('x!',"")
+                    self.current = math.factorial(self.current)
+                elif 'x^2' in self.current:
+                    self.current = self.current.replace('x^2',"")
+                    self.current = self.current*self.current
+            except Exception as e :
+                QMessageBox.about(self,'Error!','잘못 된 문장입니다.') '''
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
