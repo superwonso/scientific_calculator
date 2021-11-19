@@ -12,7 +12,7 @@ class Calc(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setWindowIcon(QIcon('calc.png'))
+        self.setWindowIcon(QIcon('warning.ico'))
         self.current = ''
         frame = QVBoxLayout()
         self.display = QLineEdit('0')
