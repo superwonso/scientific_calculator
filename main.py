@@ -12,7 +12,7 @@ class Calc(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setWindowIcon(QIcon('warning.ico'))
+        self.setWindowIcon(QIcon('calc.ico'))
         self.current = ''
         frame = QVBoxLayout()
         self.display = QLineEdit('0')
@@ -55,53 +55,93 @@ class Calc(QWidget):
         elif button_text.text() == 'Close':
             self.close()
         elif button_text.text() == 'ln' :
-            self.current = self.current.strip('ln')
-            self.current = float(self.current)
-            self.current = math.log(self.current)
-            self.current = str(self.current)
-            self.display.setText(self.current)
+            try:
+                self.current = self.current.strip('ln')
+                self.current = float(self.current)
+                self.current = math.log(self.current)
+                self.current = str(self.current)
+                self.display.setText(self.current)
+            except Exception as e :
+                QMessageBox.setWindowIcon(self,QIcon('warning.ico'))
+                QMessageBox.about(self,'Error!','잘못 된 문장입니다.')
+                self.setWindowIcon(QIcon('calc.ico'))                
         elif button_text.text() == 'sqrt(x)' :
-            self.current = self.current.strip('sqrt(x)')
-            self.current = float(self.current)
-            self.current = math.sqrt(self.current)
-            self.current = str(self.current)
-            self.display.setText(self.current)
+            try:
+                self.current = self.current.strip('sqrt(x)')
+                self.current = float(self.current)
+                self.current = math.sqrt(self.current)
+                self.current = str(self.current)
+                self.display.setText(self.current)
+            except Exception as e :
+                QMessageBox.setWindowIcon(self,QIcon('warning.ico'))
+                QMessageBox.about(self,'Error!','잘못 된 문장입니다.')
+                self.setWindowIcon(QIcon('calc.ico'))                
         elif button_text.text() == 'x!' :
-            self.current = self.current.strip('x!')
-            self.current = float(self.current)
-            self.current = math.factorial(self.current)
-            self.current = str(self.current)
-            self.display.setText(self.current)
+            try:
+                self.current = self.current.strip('x!')
+                self.current = float(self.current)
+                self.current = math.factorial(self.current)
+                self.current = str(self.current)
+                self.display.setText(self.current)
+            except Exception as e :
+                QMessageBox.setWindowIcon(self,QIcon('warning.ico'))
+                QMessageBox.about(self,'Error!','잘못 된 문장입니다.')
+                self.setWindowIcon(QIcon('calc.ico'))                
         elif button_text.text() == 'x^2' :
-            self.current = self.current.strip('x^2')
-            self.current = float(self.current)
-            self.current = math.pow(self.current,2)
-            self.current = str(self.current)
-            self.display.setText(self.current)
+            try:    
+                self.current = self.current.strip('x^2')
+                self.current = float(self.current)
+                self.current = math.pow(self.current,2)
+                self.current = str(self.current)
+                self.display.setText(self.current)
+            except Exception as e :
+                QMessageBox.setWindowIcon(self,QIcon('warning.ico'))
+                QMessageBox.about(self,'Error!','잘못 된 문장입니다.')
+                self.setWindowIcon(QIcon('calc.ico'))
         elif button_text.text() == 'log' :
-            self.current = self.current.strip('log')
-            self.current = float(self.current)
-            self.current = math.log10(self.current)
-            self.current = str(self.current)
-            self.display.setText(self.current)
+            try:    
+                self.current = self.current.strip('log')
+                self.current = float(self.current)
+                self.current = math.log10(self.current)
+                self.current = str(self.current)
+                self.display.setText(self.current)
+            except Exception as e :
+                QMessageBox.setWindowIcon(self,QIcon('warning.ico'))
+                QMessageBox.about(self,'Error!','잘못 된 문장입니다.')
+                self.setWindowIcon(QIcon('calc.ico'))
         elif button_text.text()=='I/x' :
-            self.current = self.current.strip('I/x')
-            self.current = float(self.current)
-            self.current = np.reciprocal(self.current)
-            self.current = str(self.current)
-            self.display.setText(self.current)
+            try:
+                self.current = self.current.strip('I/x')
+                self.current = float(self.current)
+                self.current = np.reciprocal(self.current)
+                self.current = str(self.current)
+                self.display.setText(self.current)
+            except Exception as e :
+                QMessageBox.setWindowIcon(self,QIcon('warning.ico'))
+                QMessageBox.about(self,'Error!','잘못 된 문장입니다.')
+                self.setWindowIcon(QIcon('calc.ico'))                
         elif button_text.text()=='|x|' :
-            self.current = self.current.strip('|x|')
-            self.current = float(self.current)
-            self.current = abs(self.current)
-            self.current = str(self.current)
-            self.display.setText(self.current)
+            try:
+                self.current = self.current.strip('|x|')
+                self.current = float(self.current)
+                self.current = abs(self.current)
+                self.current = str(self.current)
+                self.display.setText(self.current)
+            except Exception as e :
+                QMessageBox.setWindowIcon(self,QIcon('warning.ico'))
+                QMessageBox.about(self,'Error!','잘못 된 문장입니다.')
+                self.setWindowIcon(QIcon('calc.ico'))            
         elif button_text.text()=='exp' :
-            self.current = self.current.strip('exp')
-            self.current = float(self.current)
-            self.current = math.exp(self.current)
-            self.current = str(self.current)
-            self.display.setText(self.current)
+            try:
+                self.current = self.current.strip('exp')
+                self.current = float(self.current)
+                self.current = math.exp(self.current)
+                self.current = str(self.current)
+                self.display.setText(self.current)
+            except Exception as e :
+                QMessageBox.setWindowIcon(self,QIcon('warning.ico'))
+                QMessageBox.about(self,'Error!','잘못 된 문장입니다.')
+                self.setWindowIcon(QIcon('calc.ico'))
         elif button_text.text() == '=' :
             try:
                 if u"\N{Division Sign}" in self.current:
@@ -111,7 +151,11 @@ class Calc(QWidget):
                 self.current = str(eval(self.current))
                 self.display.setText(self.current)
             except Exception as e :
+                QMessageBox.setWindowIcon(self,QIcon('warning.ico'))
                 QMessageBox.about(self,'Error!','잘못 된 문장입니다.')
+                self.setWindowIcon(QIcon('calc.ico'))
+
+                
         else:
             self.current +=button_text.text()
             self.display.setText(self.current)
